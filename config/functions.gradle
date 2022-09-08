@@ -1,0 +1,28 @@
+static def addRepos(RepositoryHandler handler) {
+    handler.google()
+    handler.mavenCentral()
+    handler.maven { url 'https://plugins.gradle.org/m2/' }
+}
+
+ext.addRepos = this.&addRepos
+
+def getCustomProperty(key) {
+    Properties props = new Properties()
+    def profile = file("../properties/config.properties")
+
+    if (!profile.canRead()) {
+        println "MyHR.properties " + key + " not found."
+        return
+    }
+
+    props.load(new FileInputStream(profile))
+
+    if (props == null || !props.containsKey(key)) {
+        println "MyHR.properties " + key + " found but some entries are missing."
+        return
+    }
+
+    return props[key]
+}
+
+ext.getCustomProperty = this.&getCustomProperty

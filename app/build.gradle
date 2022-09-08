@@ -1,0 +1,109 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'org.jetbrains.kotlin.kapt'
+    id "org.jetbrains.kotlin.plugin.parcelize"
+    id 'com.google.dagger.hilt.android'
+    id 'androidx.navigation.safeargs.kotlin'
+}
+
+apply from: "../config/versions.gradle"
+apply from: "../config/functions.gradle"
+apply from: "../config/variables.gradle"
+
+android {
+    compileSdk 32
+
+    defaultConfig {
+        applicationId "com.example.bitsocurrency"
+        minSdk 21
+        targetSdk 32
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        applicationVariants.all {
+            variant ->
+                variant.buildConfigField STRING, API_URL, getCustomProperty(API_URL)
+                variant.buildConfigField STRING, AVAILABLE_BOOKS, getCustomProperty(AVAILABLE_BOOKS)
+                variant.buildConfigField STRING, ORDER_BOOK, getCustomProperty(ORDER_BOOK)
+                variant.buildConfigField STRING, TICKER, getCustomProperty(TICKER)
+        }
+        debug {
+            minifyEnabled false
+            signingConfig signingConfigs.debug
+            buildConfigField BOOLEAN, DEBUG_MODE, TRUE
+        }
+        release {
+            minifyEnabled true
+            buildConfigField BOOLEAN, DEBUG_MODE, FALSE
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    packagingOptions {
+        resources.excludes += "DebugProbesKt.bin"
+    }
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+    implementation(deps.androidx.core)
+    implementation(deps.androidx.appcompat)
+    implementation(deps.androidx.constraint)
+
+    implementation(deps.google.material)
+
+    testImplementation(deps.test.junit)
+    androidTestImplementation(deps.test.junit_ext)
+    androidTestImplementation(deps.test.junit_ext)
+    testImplementation(deps.test.mockwebserver)
+    testImplementation(deps.test.mockito)
+
+    implementation(deps.squareup.retrofit)
+    implementation(deps.squareup.converter_gson)
+
+    implementation(deps.google.gson)
+
+    implementation(platform(deps.squareup.okhttp_bom))
+    implementation(deps.squareup.okhttp)
+    implementation(deps.squareup.logging_interceptor)
+
+    implementation(deps.google.hilt)
+    kapt(deps.google.hilt_compiler)
+
+    implementation(deps.other.coroutines)
+
+    implementation(deps.other.glide)
+    kapt(deps.other.glide_compiler)
+
+    implementation(deps.androidx.room)
+    kapt(deps.androidx.room_compiler)
+
+    implementation(deps.androidx.activity)
+    implementation(deps.androidx.fragment)
+
+    implementation(deps.androidx.viewmodel)
+    implementation(deps.androidx.livedata)
+    implementation(deps.androidx.savedstate)
+    kapt(deps.androidx.lifecycle_compiler)
+
+    implementation(deps.androidx.navigation)
+    implementation(deps.androidx.navigation_ui)
+}
+
+kapt {
+    correctErrorTypes true
+}

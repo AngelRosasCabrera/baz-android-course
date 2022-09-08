@@ -1,0 +1,25 @@
+def BOOLEAN = "boolean"
+def STRING = "String"
+def INT = "int"
+def TRUE = "true"
+def FALSE = "false"
+def DEBUG_MODE = "DEBUG_MODE"
+
+ext.BOOLEAN = BOOLEAN
+ext.STRING = STRING
+ext.INT = INT
+ext.TRUE = TRUE
+ext.FALSE = FALSE
+ext.DEBUG_MODE = DEBUG_MODE
+
+def API_URL = "API_URL"
+def AVAILABLE_BOOKS = "AVAILABLE_BOOKS"
+def ORDER_BOOK = "ORDER_BOOK"
+def TICKER = "TICKER"
+
+ext.API_URL = API_URL
+ext.AVAILABLE_BOOKS = AVAILABLE_BOOKS
+ext.ORDER_BOOK = ORDER_BOOK
+ext.TICKER = TICKER
+
+

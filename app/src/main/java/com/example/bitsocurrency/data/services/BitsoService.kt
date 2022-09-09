@@ -11,12 +11,12 @@ import retrofit2.http.Query
 interface BitsoService {
 
     @GET(BuildConfig.AVAILABLE_BOOKS)
-    fun getAvailableBooks(): Flow<BitsoResponse>
+    suspend fun getAvailableBooks(): BitsoResponse
 
     @GET(BuildConfig.TICKER)
-    fun getTicker(): Flow<TickerResponse>
+    suspend fun getTicker(): TickerResponse
 
     @GET(BuildConfig.ORDER_BOOK)
-    fun getBook(@Query("book") book: String): Flow<BookResponse>
+    suspend fun getBook(@Query("book") book: String): BookResponse
 
 }

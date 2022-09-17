@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">BitsoCurrency</string>
+
+    <string name="act_main_icon_currency">Icono de la moneda</string>
 </resources>

@@ -1,10 +1,10 @@
-package com.example.bitsocurrency.ui.activities.viewmodel
+package com.example.bitsocurrency.ui.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.bitsocurrency.domain.AvailableBooksUseCase
+import com.example.bitsocurrency.domain.usecases.AvailableBooksUseCase
 import com.example.bitsocurrency.domain.models.Bitso
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

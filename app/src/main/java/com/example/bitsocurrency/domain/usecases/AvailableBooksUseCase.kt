@@ -1,4 +1,4 @@
-package com.example.bitsocurrency.domain
+package com.example.bitsocurrency.domain.usecases
 
 import com.example.bitsocurrency.data.repository.BitsoRepository
 import com.example.bitsocurrency.domain.models.Bitso

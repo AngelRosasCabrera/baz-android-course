@@ -1,6 +1,8 @@
 package com.example.bitsocurrency.ui.activities
 
+import android.opengl.Visibility
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
@@ -22,6 +24,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+    }
+
+    fun showLoading() {
+        binding.lottieLoading.visibility = View.VISIBLE
+    }
+
+    fun hideLoading() {
+        binding.lottieLoading.visibility = View.GONE
     }
 
     override fun onBackPressed() {

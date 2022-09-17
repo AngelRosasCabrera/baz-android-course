@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bitsocurrency.databinding.FragmentBitsoBinding
+import com.example.bitsocurrency.ui.activities.MainActivity
 import com.example.bitsocurrency.ui.adapters.BitsoAdapter
 import com.example.bitsocurrency.ui.viewmodel.BitsoViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -36,7 +37,11 @@ class BitsoFragment : Fragment() {
         }
 
         viewModel.getAvailableBooks()
-        viewModel.availableBooks.observe(this) { adapter.items = it }
+
+        viewModel.availableBooks.observe(viewLifecycleOwner) {
+            adapter.items = it
+            (requireActivity() as MainActivity).hideLoading()
+        }
     }
 
 }

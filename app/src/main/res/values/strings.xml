@@ -2,4 +2,11 @@
     <string name="app_name">BitsoCurrency</string>
 
     <string name="act_main_icon_currency">Icono de la moneda</string>
+
+    <!-- Navigation title -->
+    <string name="title_bitso">Bitso</string>
+    <string name="title_bitso_details">Detalles</string>
+
+    <!-- Backpressed -->
+    <string name="press_back_again_to_exit">Presiona de nuevo para salir</string>
 </resources>

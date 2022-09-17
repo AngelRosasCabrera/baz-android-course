@@ -1,26 +1,37 @@
 package com.example.bitsocurrency.ui.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import androidx.activity.viewModels
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.fragment.NavHostFragment
 import com.example.bitsocurrency.R
-import com.example.bitsocurrency.ui.activities.viewmodel.BitsoViewModel
+import com.example.bitsocurrency.databinding.ActivityMainBinding
+import com.example.bitsocurrency.utils.constants.Constants
 import dagger.hilt.android.AndroidEntryPoint
-
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private val viewModel: BitsoViewModel by viewModels()
+    private lateinit var binding: ActivityMainBinding
+
+    private var backPressedTime: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        viewModel.availableBooks.observe(this) {
-            it.forEach { bitso ->
-                Log.d("AndroidStudio", bitso.book)
-            }
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+    }
+
+    override fun onBackPressed() {
+        if (backPressedTime + Constants.TIME_TO_EXIT > System.currentTimeMillis()) {
+            super.onBackPressed()
+            finish()
+            return
+        } else {
+            Toast.makeText(this, getString(R.string.press_back_again_to_exit), Toast.LENGTH_SHORT).show()
         }
+        backPressedTime = System.currentTimeMillis()
     }
 }

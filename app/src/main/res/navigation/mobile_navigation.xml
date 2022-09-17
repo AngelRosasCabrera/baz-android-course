@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/navigation_home_bitso">
+
+    <fragment
+        android:id="@+id/navigation_home_bitso"
+        android:name="com.example.bitsocurrency.ui.fragments.BitsoFragment"
+        android:label="@string/title_bitso"
+        tools:layout="@layout/fragment_bitso">
+        <action
+            android:id="@+id/action_navigation_home_bitso_to_navigation_details_bitso"
+            app:destination="@id/navigation_details_bitso" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_details_bitso"
+        android:name="com.example.bitsocurrency.ui.fragments.DetailsBitsoFragment"
+        android:label="@string/title_bitso_details"
+        tools:layout="@layout/fragment_details_bitso" />
+</navigation>

@@ -14,7 +14,7 @@ class DetailsBitsoFragment: Fragment() {
     private val viewModel: BitsoViewModel by activityViewModels()
     private lateinit var binding: FragmentDetailsBitsoBinding
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentDetailsBitsoBinding.inflate(inflater, container, false)
         return binding.root
     }

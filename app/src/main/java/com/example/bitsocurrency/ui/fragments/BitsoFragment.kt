@@ -20,7 +20,7 @@ class BitsoFragment : Fragment() {
     private lateinit var binding: FragmentBitsoBinding
     private lateinit var adapter: BitsoAdapter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentBitsoBinding.inflate(inflater, container, false)
         return binding.root
     }

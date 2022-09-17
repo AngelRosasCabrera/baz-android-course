@@ -1,6 +1,5 @@
 package com.example.bitsocurrency.ui.activities
 
-import android.opengl.Visibility
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast

@@ -21,6 +21,7 @@ version.fragment = "1.5.1"
 version.fragment = "1.5.1"
 version.lifecycle = "2.5.1"
 version.navigation = "2.5.1"
+version.lottie = "5.2.0"
 
 def androidx = [:]
 androidx.core = "androidx.core:core-ktx:${version.core}"
@@ -67,6 +68,7 @@ def other = [:]
 other.coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${version.coroutines}"
 other.glide = "com.github.bumptech.glide:glide:${version.glide}"
 other.glide_compiler = "com.github.bumptech.glide:compiler:${version.glide}"
+other.lottie = "com.airbnb.android:lottie:${version.lottie}"
 deps.other = other
 
 ext.deps = deps

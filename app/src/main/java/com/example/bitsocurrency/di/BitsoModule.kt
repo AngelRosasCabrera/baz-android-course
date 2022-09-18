@@ -1,16 +1,22 @@
 package com.example.bitsocurrency.di
 
+import android.content.Context
+import androidx.room.Room
 import com.example.bitsocurrency.BuildConfig.API_COIN_MARKET
 import com.example.bitsocurrency.BuildConfig.API_URL
+import com.example.bitsocurrency.data.database.DatabaseApp
+import com.example.bitsocurrency.data.database.DatabaseDao
 import com.example.bitsocurrency.data.repository.BitsoRepository
 import com.example.bitsocurrency.data.repository.BitsoRepositoryImpl
 import com.example.bitsocurrency.data.repository.CoinRepository
 import com.example.bitsocurrency.data.repository.CoinRepositoryImpl
 import com.example.bitsocurrency.data.services.BitsoService
 import com.example.bitsocurrency.data.services.CoinService
+import com.example.bitsocurrency.utils.constants.Constants.DATABASE_NAME
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -25,10 +31,13 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class BitsoModule {
 
+    // region CoroutineDispatcher
     @Provides
     @Singleton
     fun provideCoroutineDispatcher(): CoroutineDispatcher = Dispatchers.IO
+    // endregion
 
+    // region Clients http
     @Provides
     @Singleton
     fun provideOkHttpClient(): OkHttpClient {
@@ -47,7 +56,9 @@ class BitsoModule {
             .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .build()
     }
+    // endregion
 
+    // region Bitso
     @Provides
     @Singleton
     fun provideBitsoService(): BitsoService {
@@ -60,6 +71,9 @@ class BitsoModule {
         return BitsoRepositoryImpl(provideBitsoService(), provideCoroutineDispatcher())
     }
 
+    // endregion
+
+    // region Coin
     @Provides
     @Singleton
     fun provideCoinService(): CoinService{
@@ -71,4 +85,21 @@ class BitsoModule {
     fun provideCoinRepository(): CoinRepository {
         return CoinRepositoryImpl(provideCoinService(), provideCoroutineDispatcher())
     }
+
+    // endregion
+
+    // region Database
+    @Provides
+    @Singleton
+    fun provideDatabaseApp(@ApplicationContext context: Context): DatabaseApp =
+        Room.databaseBuilder(context, DatabaseApp::class.java, DATABASE_NAME)
+            .fallbackToDestructiveMigration()
+            .allowMainThreadQueries()
+            .build()
+
+    @Provides
+    @Singleton
+    fun provideDatabaseDao(@ApplicationContext context: Context): DatabaseDao =
+        provideDatabaseApp(context).dao()
+    // endregion
 }

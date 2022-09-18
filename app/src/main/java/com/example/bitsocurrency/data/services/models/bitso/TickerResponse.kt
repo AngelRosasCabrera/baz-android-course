@@ -1,4 +1,4 @@
-package com.example.bitsocurrency.data.services.models
+package com.example.bitsocurrency.data.services.models.bitso
 
 import com.google.gson.annotations.Expose
 

@@ -1,21 +1,23 @@
 package com.example.bitsocurrency.data.services
 
-import com.example.bitsocurrency.BuildConfig
-import com.example.bitsocurrency.data.services.models.BitsoResponse
-import com.example.bitsocurrency.data.services.models.BookResponse
-import com.example.bitsocurrency.data.services.models.TickerResponse
+import com.example.bitsocurrency.BuildConfig.AVAILABLE_BOOKS
+import com.example.bitsocurrency.BuildConfig.TICKER
+import com.example.bitsocurrency.BuildConfig.ORDER_BOOK
+import com.example.bitsocurrency.data.services.models.bitso.BitsoResponse
+import com.example.bitsocurrency.data.services.models.bitso.BookResponse
+import com.example.bitsocurrency.data.services.models.bitso.TickerResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface BitsoService {
 
-    @GET(BuildConfig.AVAILABLE_BOOKS)
+    @GET(AVAILABLE_BOOKS)
     suspend fun getAvailableBooks(): BitsoResponse
 
-    @GET(BuildConfig.TICKER)
+    @GET(TICKER)
     suspend fun getTicker(): TickerResponse
 
-    @GET(BuildConfig.ORDER_BOOK)
+    @GET(ORDER_BOOK)
     suspend fun getBook(@Query("book") book: String): BookResponse
 
 }

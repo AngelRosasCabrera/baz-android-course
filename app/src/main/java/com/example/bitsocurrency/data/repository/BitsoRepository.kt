@@ -1,7 +1,7 @@
 package com.example.bitsocurrency.data.repository
 
-import com.example.bitsocurrency.data.services.models.BookModel
-import com.example.bitsocurrency.data.services.models.TickerModel
+import com.example.bitsocurrency.data.services.models.bitso.BookModel
+import com.example.bitsocurrency.data.services.models.bitso.TickerModel
 import com.example.bitsocurrency.domain.models.Bitso
 import retrofit2.http.Query
 

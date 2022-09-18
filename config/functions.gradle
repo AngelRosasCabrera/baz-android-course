@@ -8,7 +8,8 @@ ext.addRepos = this.&addRepos
 
 def getCustomProperty(key) {
     Properties props = new Properties()
-    def profile = file("../properties/config.properties")
+    def route = (key == "KEY_COIN_MARKET") ? "../properties/key.properties" : "../properties/config.properties"
+    def profile = file(route)
 
     if (!profile.canRead()) {
         println "MyHR.properties " + key + " not found."

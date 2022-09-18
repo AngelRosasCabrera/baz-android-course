@@ -31,6 +31,10 @@ android {
                 variant.buildConfigField STRING, AVAILABLE_BOOKS, getCustomProperty(AVAILABLE_BOOKS)
                 variant.buildConfigField STRING, ORDER_BOOK, getCustomProperty(ORDER_BOOK)
                 variant.buildConfigField STRING, TICKER, getCustomProperty(TICKER)
+                variant.buildConfigField STRING, API_COIN_MARKET, getCustomProperty(API_COIN_MARKET)
+                variant.buildConfigField STRING, API_COIN_INFO, getCustomProperty(API_COIN_INFO)
+                variant.buildConfigField STRING, KEY_COIN_MARKET, getCustomProperty(KEY_COIN_MARKET)
+                variant.buildConfigField STRING, API_COIN_HEADER, getCustomProperty(API_COIN_HEADER)
         }
         debug {
             minifyEnabled false

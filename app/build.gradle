@@ -74,6 +74,7 @@ dependencies {
 
     implementation(deps.squareup.retrofit)
     implementation(deps.squareup.converter_gson)
+    implementation(deps.squareup.adapter_rxjava)
 
     implementation(deps.google.gson)
 
@@ -104,6 +105,9 @@ dependencies {
     implementation(deps.androidx.navigation_ui)
 
     implementation(deps.other.lottie)
+
+    implementation(deps.other.rxandroid)
+    implementation(deps.other.rxkotlin)
 }
 
 kapt {

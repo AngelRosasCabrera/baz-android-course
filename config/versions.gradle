@@ -22,6 +22,7 @@ version.fragment = "1.5.1"
 version.lifecycle = "2.5.1"
 version.navigation = "2.5.1"
 version.lottie = "5.2.0"
+version.rxandroid = "3.0.0"
 
 def androidx = [:]
 androidx.core = "androidx.core:core-ktx:${version.core}"
@@ -59,6 +60,7 @@ deps.test = test
 def squareup = [:]
 squareup.retrofit = "com.squareup.retrofit2:retrofit:${version.retrofit}"
 squareup.converter_gson = "com.squareup.retrofit2:converter-gson:${version.retrofit}"
+squareup.adapter_rxjava = "com.squareup.retrofit2:adapter-rxjava3:${version.retrofit}"
 squareup.okhttp_bom = "com.squareup.okhttp3:okhttp-bom:${version.okhttp_bom}"
 squareup.okhttp = "com.squareup.okhttp3:okhttp"
 squareup.logging_interceptor = "com.squareup.okhttp3:logging-interceptor"
@@ -69,6 +71,8 @@ other.coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${version.c
 other.glide = "com.github.bumptech.glide:glide:${version.glide}"
 other.glide_compiler = "com.github.bumptech.glide:compiler:${version.glide}"
 other.lottie = "com.airbnb.android:lottie:${version.lottie}"
+other.rxandroid = "io.reactivex.rxjava3:rxandroid:${version.rxandroid}"
+other.rxkotlin = "io.reactivex.rxjava3:rxkotlin:${version.rxandroid}"
 deps.other = other
 
 ext.deps = deps

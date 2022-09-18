@@ -1,15 +1,13 @@
 package com.example.bitsocurrency.di
 
+import android.app.Application
 import android.content.Context
 import androidx.room.Room
 import com.example.bitsocurrency.BuildConfig.API_COIN_MARKET
 import com.example.bitsocurrency.BuildConfig.API_URL
 import com.example.bitsocurrency.data.database.DatabaseApp
 import com.example.bitsocurrency.data.database.DatabaseDao
-import com.example.bitsocurrency.data.repository.BitsoRepository
-import com.example.bitsocurrency.data.repository.BitsoRepositoryImpl
-import com.example.bitsocurrency.data.repository.CoinRepository
-import com.example.bitsocurrency.data.repository.CoinRepositoryImpl
+import com.example.bitsocurrency.data.repository.*
 import com.example.bitsocurrency.data.services.BitsoService
 import com.example.bitsocurrency.data.services.CoinService
 import com.example.bitsocurrency.utils.constants.Constants.DATABASE_NAME
@@ -30,6 +28,12 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class BitsoModule {
+    // region Context
+    @Provides
+    @Singleton
+    @ApplicationContext
+    fun provideApplicationContext(): Context = Application().applicationContext
+    // endregion
 
     // region CoroutineDispatcher
     @Provides
@@ -91,15 +95,18 @@ class BitsoModule {
     // region Database
     @Provides
     @Singleton
-    fun provideDatabaseApp(@ApplicationContext context: Context): DatabaseApp =
-        Room.databaseBuilder(context, DatabaseApp::class.java, DATABASE_NAME)
+    fun provideDatabaseApp(): DatabaseApp =
+        Room.databaseBuilder(provideApplicationContext(), DatabaseApp::class.java, DATABASE_NAME)
             .fallbackToDestructiveMigration()
             .allowMainThreadQueries()
             .build()
 
     @Provides
     @Singleton
-    fun provideDatabaseDao(@ApplicationContext context: Context): DatabaseDao =
-        provideDatabaseApp(context).dao()
+    fun provideDatabaseDao(): DatabaseDao = provideDatabaseApp().dao()
+
+    @Provides
+    @Singleton
+    fun provideDatabaseRepository(): DatabaseRepository = DatabaseRepositoryImpl(provideDatabaseDao())
     // endregion
 }

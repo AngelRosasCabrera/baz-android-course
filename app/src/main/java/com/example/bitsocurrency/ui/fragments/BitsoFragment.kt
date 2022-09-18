@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.bitsocurrency.R
 import com.example.bitsocurrency.databinding.FragmentBitsoBinding
 import com.example.bitsocurrency.ui.activities.MainActivity
 import com.example.bitsocurrency.ui.adapters.BitsoAdapter
@@ -34,13 +35,18 @@ class BitsoFragment : Fragment() {
             rvBitsoCurrency.adapter = adapter
             rvBitsoCurrency.setHasFixedSize(false)
             rvBitsoCurrency.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            swBitsoRefresh.setOnRefreshListener {
+                swBitsoRefresh.isRefreshing = true
+                viewModel.getAvailableBooks(isRefresh = true)
+            }
         }
 
-        viewModel.getAvailableBooks()
+        viewModel.getAvailableBooks(isRefresh = false)
 
         viewModel.availableBooks.observe(viewLifecycleOwner) {
             adapter.items = it
             (requireActivity() as MainActivity).hideLoading()
+            binding.swBitsoRefresh.isRefreshing = false
         }
     }
 

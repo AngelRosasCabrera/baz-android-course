@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.bitsocurrency.domain.usecases.AvailableBooksUseCase
 import com.example.bitsocurrency.domain.models.Bitso
+import com.example.bitsocurrency.domain.usecases.AvailableBooksUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -18,8 +18,8 @@ class BitsoViewModel @Inject constructor(private val availableBooksUseCase: Avai
     val availableBooks: LiveData<List<Bitso>> get() = _availableBooks
 
 
-    fun getAvailableBooks() = viewModelScope.launch {
-        _availableBooks.value = availableBooksUseCase.invoke()
+    fun getAvailableBooks(isRefresh: Boolean) = viewModelScope.launch {
+        _availableBooks.value = availableBooksUseCase.invoke(isRefresh)
     }
 
 }

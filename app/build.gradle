@@ -95,6 +95,7 @@ dependencies {
     kapt(deps.other.glide_compiler)
 
     implementation(deps.androidx.room)
+    implementation(deps.androidx.room_ktx)
     kapt(deps.androidx.room_compiler)
 
     implementation(deps.androidx.activity)

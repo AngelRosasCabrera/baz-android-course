@@ -112,6 +112,8 @@ dependencies {
 
     implementation(deps.other.rxandroid)
     implementation(deps.other.rxkotlin)
+
+    implementation(deps.androidx.swipe_refresh)
 }
 
 kapt {

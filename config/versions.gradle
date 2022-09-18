@@ -23,6 +23,7 @@ version.lifecycle = "2.5.1"
 version.navigation = "2.5.1"
 version.lottie = "5.2.0"
 version.rxandroid = "3.0.0"
+version.swipe_refresh = "1.1.0"
 
 def androidx = [:]
 androidx.core = "androidx.core:core-ktx:${version.core}"
@@ -39,6 +40,7 @@ androidx.lifecycle_compiler = "androidx.lifecycle:lifecycle-compiler:${version.l
 androidx.navigation = "androidx.navigation:navigation-fragment-ktx:${version.navigation}"
 androidx.navigation_ui = "androidx.navigation:navigation-ui-ktx:${version.navigation}"
 androidx.navigation_safe_args = "androidx.navigation:navigation-safe-args-gradle-plugin:${version.navigation}"
+androidx.swipe_refresh = "androidx.swiperefreshlayout:swiperefreshlayout:${version.swipe_refresh}"
 deps.androidx = androidx
 
 def google = [:]

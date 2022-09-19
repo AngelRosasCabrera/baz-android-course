@@ -13,7 +13,6 @@ El propósito es construir una aplicación que use la API pública de Bitso, la 
 - Una pantalla que muestre todas las monedas disponibles
 - Una pantalla de detalle para cada moneda
 - Persistencia local
-- Cobertura de tests
 
 ## Requerimientos
 
@@ -24,7 +23,6 @@ Estos son los requerimientos principales que evaluaremos:
     - Diseño de API
     - Diseño de UI
     - Patrones de diseño
-    - Testing 
 
 ## Para empezar
 
@@ -56,6 +54,8 @@ Con base en el material de autoestudio y las mentorías hasta este entregable, s
     - Crear una pantalla de detalle que mostrará el último precio, el más alto y el más bajo. Además, mostrar una lista de `bids` y `asks` haciendo uso del servicio `order-book`
 - Hacer uso de buenas prácticas
 
+### **Fecha de Entrega 21 de Septiembre**
+
 > Nota: la lista anterior de este entregable es sólo una guía para ayudarte a distribuir la carga de trabajo; puedes entregar más o menos elementos si es necesario. De igual manera, si entregas menos elementos en este punto, tendrás que cubrir los elementos restantes en el siguiente entregable.
 
 ## Segundo Entregable
@@ -69,10 +69,11 @@ Con base en el material de autoestudio y las mentorías hasta este entregable, s
 - Hacer _refactor_ de la vista, actualiza tus layouts haciendo uso de `ConstraintLayout`
 - Hacer uso de buenas prácticas
 
+### **Fecha de Entrega 28 de Septiembre**
+
 > Nota: la lista anterior de este entregable es sólo una guía para ayudarte a distribuir la carga de trabajo; puedes entregar más o menos elementos si es necesario. De igual manera, si entregas menos elementos en este punto, tendrás que cubrir los elementos restantes en el siguiente entregable.
 
 ## Tercer y último entregable
-
 - Agrega un `linter` para poder hacer análisis estático de tu código.
 - Has uso de algunas características avanzadas de Kotlin como: `inline functions`, `tail recursive`, `delegated properties` y `collection operations`
 - Implementa `coroutines` y usa `suspend functions` con _Retrofit_.
@@ -81,6 +82,9 @@ Con base en el material de autoestudio y las mentorías hasta este entregable, s
 - Implementa RxJava2 o RxJava3, envuelve la respuesta de _Retrofit_ y crea un `observable` que vaya a ser observado o cambia la respuesta de _Retrofit_ a un `Observable`.
 - Hacer uso de buenas prácticas
 
+### **Fecha de Entrega 3 de Octubre**
+
+
 > Importante: este es el último entregabble, por lo cual todos los requerimientos deben ser incluidos. Proveeremos retroalimentación de tu entregable y tendrás 3 días más para aplicar los cambios. En el tercer día, dejaremos de recibir cambios a las 11:00 a.m.
 
 ## Enviando los entregables
@@ -88,6 +92,6 @@ Con base en el material de autoestudio y las mentorías hasta este entregable, s
 Para publicar tu trabajo, deberás seguir estos pasos:
 
 1. Crear un `pull request` con tu código, apuntando a la rama `master`
-2. Llenar este formato _TBD_
+2. Llenar este [formato](https://forms.gle/1ceEaPW3LABJqUCz6)
 3. Mantente al pendiente de la retroalimentación.
 4. Genera los cambios conforme a los comentarios de tu mentor.

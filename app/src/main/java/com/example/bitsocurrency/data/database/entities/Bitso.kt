@@ -18,7 +18,10 @@ data class BitsoEntity(
     @ColumnInfo(name = "minimum_amount") val minimumAmount: String = "",
     @ColumnInfo(name = "minimum_price") val minimumPrice: String = "",
     @ColumnInfo(name = "minimum_value") val minimumValue: String = "",
-    @ColumnInfo(name = "tick_size") val tickSize: String = ""
+    @ColumnInfo(name = "tick_size") val tickSize: String = "",
+    @ColumnInfo(name = "img_url") val imgUrl: String = "",
+    @ColumnInfo(name = "name") val name: String = "",
+    @ColumnInfo(name = "symbol") val symbol: String = ""
 )
 
 fun Bitso.toDatabase() = BitsoEntity(
@@ -30,5 +33,8 @@ fun Bitso.toDatabase() = BitsoEntity(
     minimumAmount = minimumAmount,
     minimumPrice = minimumPrice,
     minimumValue = minimumValue,
-    tickSize = tickSize
+    tickSize = tickSize,
+    imgUrl = imgUrl,
+    name = name,
+    symbol = symbol,
 )

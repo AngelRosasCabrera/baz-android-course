@@ -1,6 +1,6 @@
 package com.example.bitsocurrency.domain.models
 
-import com.example.bitsocurrency.data.services.models.bitso.BitsoModel
+import com.example.bitsocurrency.data.database.entities.BitsoEntity
 
 data class Bitso(
     val book: String = "",
@@ -11,10 +11,13 @@ data class Bitso(
     val minimumAmount: String = "",
     val minimumPrice: String = "",
     val minimumValue: String = "",
-    val tickSize: String = ""
+    val tickSize: String = "",
+    val imgUrl: String = "",
+    val name: String = "",
+    val symbol: String = ""
 )
 
-fun BitsoModel.toDomain() = Bitso(
+fun BitsoEntity.toDomain() = Bitso(
     book = book,
     defaultChart = defaultChart,
     maximumAmount = maximumAmount,
@@ -23,5 +26,8 @@ fun BitsoModel.toDomain() = Bitso(
     minimumAmount = minimumAmount,
     minimumPrice = minimumPrice,
     minimumValue = minimumValue,
-    tickSize = tickSize
+    tickSize = tickSize,
+    imgUrl = imgUrl,
+    name = name,
+    symbol = symbol,
 )

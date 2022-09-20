@@ -1,6 +1,5 @@
 package com.example.bitsocurrency.di
 
-import android.app.Application
 import android.content.Context
 import androidx.room.Room
 import com.example.bitsocurrency.BuildConfig.*
@@ -23,19 +22,11 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 class BitsoModule {
-    // region Context
-    @Provides
-    @Singleton
-    @ApplicationContext
-    fun provideApplicationContext(): Context = Application().applicationContext
-    // endregion
-
     // region CoroutineDispatcher
     @Provides
     @Singleton
@@ -73,7 +64,7 @@ class BitsoModule {
     @Provides
     @Singleton
     fun provideBitsoRepository(): BitsoRepository {
-        return BitsoRepositoryImpl(provideBitsoService(), provideCoroutineDispatcher())
+        return BitsoRepositoryImpl(provideBitsoService(), provideCoroutineDispatcher(), provideIconRepository())
     }
 
     // endregion
@@ -81,7 +72,7 @@ class BitsoModule {
     // region Coin
     @Provides
     @Singleton
-    fun provideCoinService(): CoinService{
+    fun provideCoinService(): CoinService {
         return provideRetrofit(API_COIN_MARKET, provideOkHttpClient()).create(CoinService::class.java)
     }
 
@@ -106,18 +97,18 @@ class BitsoModule {
     // region Database
     @Provides
     @Singleton
-    fun provideDatabaseApp(): DatabaseApp =
-        Room.databaseBuilder(provideApplicationContext(), DatabaseApp::class.java, DATABASE_NAME)
+    fun provideDatabaseApp(@ApplicationContext context: Context): DatabaseApp =
+        Room.databaseBuilder(context, DatabaseApp::class.java, DATABASE_NAME)
             .fallbackToDestructiveMigration()
             .allowMainThreadQueries()
             .build()
 
     @Provides
     @Singleton
-    fun provideDatabaseDao(): DatabaseDao = provideDatabaseApp().dao()
+    fun provideDatabaseDao(@ApplicationContext context: Context): DatabaseDao = provideDatabaseApp(context).dao()
 
     @Provides
     @Singleton
-    fun provideDatabaseRepository(): DatabaseRepository = DatabaseRepositoryImpl(provideDatabaseDao())
+    fun provideDatabaseRepository(@ApplicationContext context: Context): DatabaseRepository = DatabaseRepositoryImpl(provideDatabaseDao(context))
     // endregion
 }

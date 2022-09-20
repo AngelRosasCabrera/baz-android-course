@@ -3,13 +3,13 @@ package com.example.bitsocurrency.di
 import android.app.Application
 import android.content.Context
 import androidx.room.Room
-import com.example.bitsocurrency.BuildConfig.API_COIN_MARKET
-import com.example.bitsocurrency.BuildConfig.API_URL
+import com.example.bitsocurrency.BuildConfig.*
 import com.example.bitsocurrency.data.database.DatabaseApp
 import com.example.bitsocurrency.data.database.DatabaseDao
 import com.example.bitsocurrency.data.repository.*
 import com.example.bitsocurrency.data.services.BitsoService
 import com.example.bitsocurrency.data.services.CoinService
+import com.example.bitsocurrency.data.services.IconService
 import com.example.bitsocurrency.utils.constants.Constants.DATABASE_NAME
 import dagger.Module
 import dagger.Provides
@@ -23,6 +23,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.create
 import javax.inject.Singleton
 
 @Module
@@ -90,6 +91,16 @@ class BitsoModule {
         return CoinRepositoryImpl(provideCoinService(), provideCoroutineDispatcher())
     }
 
+    // endregion
+
+    // region Icons
+    @Provides
+    @Singleton
+    fun provideIconService(): IconService = provideRetrofit(GITHUB_RAW, provideOkHttpClient()).create(IconService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideIconRepository(): IconRepository = IconRepositoryImpl(provideIconService())
     // endregion
 
     // region Database

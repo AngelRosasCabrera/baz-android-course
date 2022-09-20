@@ -35,6 +35,8 @@ android {
                 variant.buildConfigField STRING, API_COIN_INFO, getCustomProperty(API_COIN_INFO)
                 variant.buildConfigField STRING, KEY_COIN_MARKET, getCustomProperty(KEY_COIN_MARKET)
                 variant.buildConfigField STRING, API_COIN_HEADER, getCustomProperty(API_COIN_HEADER)
+                variant.buildConfigField STRING, GITHUB_RAW, getCustomProperty(GITHUB_RAW)
+                variant.buildConfigField STRING, GITHUB_DETAILS, getCustomProperty(GITHUB_DETAILS)
         }
         debug {
             minifyEnabled false

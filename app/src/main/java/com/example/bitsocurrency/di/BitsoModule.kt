@@ -26,7 +26,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class BitsoModule {
+object BitsoModule {
     // region CoroutineDispatcher
     @Provides
     @Singleton

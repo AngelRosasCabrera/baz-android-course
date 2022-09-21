@@ -18,4 +18,8 @@ object Constants {
      */
     const val TABLE_BITSO = "bitso"
     // endregion
+
+    const val DEFAULT_ICON = "https://www.picng.com/upload/dollar_sign/png_dollar_sign_63779.png"
+
+    const val DELIMITER_UNDESCORE = "_"
 }

@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.bitsocurrency.databinding.ListItemBitsoBinding
 import com.example.bitsocurrency.domain.models.Bitso
 import com.example.bitsocurrency.utils.extensions.diffUtil
+import com.example.bitsocurrency.utils.extensions.loadUrl
 
 class BitsoAdapter : RecyclerView.Adapter<BitsoAdapter.BitsoViewHolder>() {
 
@@ -21,12 +22,13 @@ class BitsoAdapter : RecyclerView.Adapter<BitsoAdapter.BitsoViewHolder>() {
     override fun getItemCount(): Int = items.size
 
     inner class BitsoViewHolder(private val binding: ListItemBitsoBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(items: List<Bitso>){
+        fun bind(items: List<Bitso>) {
             val currentItem = items[adapterPosition]
             with(binding) {
                 tvMaximumAmount.text = currentItem.maximumAmount
                 tvMaximumPrice.text = currentItem.maximumPrice
-                tvNameCurrency.text = currentItem.book
+                tvNameCurrency.text = currentItem.name
+                ivIconCurrency.loadUrl(currentItem.imgUrl)
             }
         }
     }

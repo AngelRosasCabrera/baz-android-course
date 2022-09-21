@@ -1,7 +1,9 @@
 package com.example.bitsocurrency.utils.extensions
 
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import kotlin.properties.Delegates
 
 fun <VH : RecyclerView.ViewHolder, T> RecyclerView.Adapter<VH>.diffUtil(
@@ -21,3 +23,5 @@ fun <VH : RecyclerView.ViewHolder, T> RecyclerView.Adapter<VH>.diffUtil(
         override fun getNewListSize(): Int = new.size
     }).dispatchUpdatesTo(this)
 }
+
+fun AppCompatImageView.loadUrl(url: String) = Glide.with(context).load(url).into(this)

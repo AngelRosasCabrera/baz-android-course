@@ -9,7 +9,7 @@ import com.example.bitsocurrency.databinding.ListItemBitsoBinding
 import com.example.bitsocurrency.domain.models.Bitso
 import com.example.bitsocurrency.utils.extensions.loadUrl
 
-class BitsoAdapter : ListAdapter<Bitso, BitsoAdapter.BitsoViewHolder>(DiffCallback()) {
+class BitsoAdapter(private val onItemClickListener: BitsoOnItemClickListener) : ListAdapter<Bitso, BitsoAdapter.BitsoViewHolder>(DiffCallback()) {
 
     private class DiffCallback : DiffUtil.ItemCallback<Bitso>() {
         override fun areItemsTheSame(oldItem: Bitso, newItem: Bitso): Boolean {
@@ -36,7 +36,12 @@ class BitsoAdapter : ListAdapter<Bitso, BitsoAdapter.BitsoViewHolder>(DiffCallba
                 tvMaximumPrice.text = currentItem.maximumPrice
                 tvNameCurrency.text = currentItem.name
                 ivIconCurrency.loadUrl(currentItem.imgUrl)
+                root.setOnClickListener{ onItemClickListener.onItemClickListener(currentItem) }
             }
         }
+    }
+
+    interface BitsoOnItemClickListener {
+        fun onItemClickListener(bitso: Bitso)
     }
 }

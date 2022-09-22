@@ -6,20 +6,24 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bitsocurrency.R
 import com.example.bitsocurrency.databinding.FragmentBitsoBinding
+import com.example.bitsocurrency.domain.models.Bitso
 import com.example.bitsocurrency.ui.activities.MainActivity
 import com.example.bitsocurrency.ui.adapters.BitsoAdapter
 import com.example.bitsocurrency.ui.viewmodel.BitsoViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class BitsoFragment : Fragment() {
+class BitsoFragment : Fragment(), BitsoAdapter.BitsoOnItemClickListener {
 
     private val viewModel: BitsoViewModel by activityViewModels()
     private lateinit var binding: FragmentBitsoBinding
     private lateinit var adapter: BitsoAdapter
+    private lateinit var navHostFragment: NavHostFragment
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentBitsoBinding.inflate(inflater, container, false)
@@ -29,7 +33,7 @@ class BitsoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = BitsoAdapter()
+        adapter = BitsoAdapter(this)
 
         with(binding) {
             rvBitsoCurrency.adapter = adapter
@@ -40,7 +44,6 @@ class BitsoFragment : Fragment() {
                 viewModel.getAvailableBooks(isRefresh = true)
             }
         }
-
         viewModel.getAvailableBooks(isRefresh = false)
 
         viewModel.availableBooks.observe(viewLifecycleOwner) {
@@ -48,6 +51,11 @@ class BitsoFragment : Fragment() {
             (requireActivity() as MainActivity).hideLoading()
             binding.swBitsoRefresh.isRefreshing = false
         }
+    }
+
+    override fun onItemClickListener(bitso: Bitso) {
+        val action = BitsoFragmentDirections.actionNavigationHomeBitsoToNavigationDetailsBitso(bitso)
+        findNavController().navigate(action)
     }
 
 }

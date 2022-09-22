@@ -5,7 +5,14 @@ import androidx.room.Room
 import com.example.bitsocurrency.BuildConfig.*
 import com.example.bitsocurrency.data.database.DatabaseApp
 import com.example.bitsocurrency.data.database.DatabaseDao
-import com.example.bitsocurrency.data.repository.*
+import com.example.bitsocurrency.data.datasource.BitsoDataSource
+import com.example.bitsocurrency.data.datasource.BitsoLocalDataSource
+import com.example.bitsocurrency.data.datasource.LocalBitsoDataSource
+import com.example.bitsocurrency.data.datasource.RemoteBitsoDataSource
+import com.example.bitsocurrency.data.repository.BitsoRepository
+import com.example.bitsocurrency.data.repository.BitsoRepositoryImpl
+import com.example.bitsocurrency.data.repository.CoinRepository
+import com.example.bitsocurrency.data.repository.CoinRepositoryImpl
 import com.example.bitsocurrency.data.services.BitsoService
 import com.example.bitsocurrency.data.services.CoinService
 import com.example.bitsocurrency.data.services.IconService
@@ -63,10 +70,13 @@ object BitsoModule {
 
     @Provides
     @Singleton
-    fun provideBitsoRepository(): BitsoRepository {
-        return BitsoRepositoryImpl(provideBitsoService(), provideCoroutineDispatcher(), provideIconRepository())
-    }
+    fun provideBitsoDataSource():BitsoDataSource = RemoteBitsoDataSource(provideBitsoService(), provideIconService())
 
+    @Provides
+    @Singleton
+    fun provideBitsoRepository(@ApplicationContext context: Context): BitsoRepository {
+        return BitsoRepositoryImpl(provideBitsoDataSource(), provideBitsoLocalDataSource(context),provideCoroutineDispatcher())
+    }
     // endregion
 
     // region Coin
@@ -89,9 +99,6 @@ object BitsoModule {
     @Singleton
     fun provideIconService(): IconService = provideRetrofit(GITHUB_RAW, provideOkHttpClient()).create(IconService::class.java)
 
-    @Provides
-    @Singleton
-    fun provideIconRepository(): IconRepository = IconRepositoryImpl(provideIconService())
     // endregion
 
     // region Database
@@ -109,6 +116,7 @@ object BitsoModule {
 
     @Provides
     @Singleton
-    fun provideDatabaseRepository(@ApplicationContext context: Context): DatabaseRepository = DatabaseRepositoryImpl(provideDatabaseDao(context))
+    fun provideBitsoLocalDataSource(@ApplicationContext context: Context): BitsoLocalDataSource =
+        LocalBitsoDataSource(provideDatabaseDao(context))
     // endregion
 }

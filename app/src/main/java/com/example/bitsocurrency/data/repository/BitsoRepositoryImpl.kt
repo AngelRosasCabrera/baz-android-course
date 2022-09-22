@@ -1,50 +1,40 @@
 package com.example.bitsocurrency.data.repository
 
-import com.example.bitsocurrency.data.services.BitsoService
+import com.example.bitsocurrency.data.mappers.toDatabase
+import com.example.bitsocurrency.data.datasource.BitsoDataSource
+import com.example.bitsocurrency.data.datasource.BitsoLocalDataSource
 import com.example.bitsocurrency.data.services.models.bitso.BookModel
 import com.example.bitsocurrency.data.services.models.bitso.TickerModel
 import com.example.bitsocurrency.data.services.models.icon.IconResponseItem
 import com.example.bitsocurrency.domain.models.Bitso
+import com.example.bitsocurrency.domain.models.toDomain
 import com.example.bitsocurrency.utils.constants.Constants.DEFAULT_ICON
 import com.example.bitsocurrency.utils.constants.Constants.DELIMITER_UNDESCORE
+import com.example.bitsocurrency.utils.network.NetworkUtils
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class BitsoRepositoryImpl @Inject constructor(
-    private val service: BitsoService,
+    private val dataSource: BitsoDataSource,
+    private val localSource: BitsoLocalDataSource,
     private val dispatcher: CoroutineDispatcher,
-    private val iconRepository: IconRepository
 ) : BitsoRepository {
     override suspend fun getAvailableBooks(): List<Bitso> = withContext(dispatcher) {
-        val mapOfIcons = iconRepository.getMapIcons()
-        return@withContext service.getAvailableBooks().payload.map {
-            val coin = it.book.split(DELIMITER_UNDESCORE)[0]
-            val icons = mapOfIcons.filter { item -> item.symbol.lowercase() == coin.lowercase() }
-            val icon = if (icons.isEmpty())
-                IconResponseItem(
-                    imgUrl = DEFAULT_ICON,
-                    name = coin.uppercase(),
-                    symbol = coin
-                )
-            else icons[0]
-            Bitso(
-                book = it.book,
-                defaultChart = it.defaultChart,
-                maximumAmount = it.maximumAmount,
-                maximumPrice = it.maximumPrice,
-                maximumValue = it.maximumValue,
-                minimumAmount = it.minimumAmount,
-                minimumPrice = it.minimumPrice,
-                minimumValue = it.minimumValue,
-                tickSize = it.tickSize,
-                imgUrl = icon.imgUrl,
-                name = icon.name,
-                symbol = icon.symbol,
-            )
+        if(NetworkUtils.isNetworkAvailable()) {
+            localSource.deleteAllData()
+            val mapOfIcons = dataSource.getMapIcons()
+            val data = dataSource.getAvailableBooks().payload.map {
+                val coin = it.book.split(DELIMITER_UNDESCORE).first()
+                val icons: List<IconResponseItem> = mapOfIcons.filter { item -> item.symbol.lowercase() == coin.lowercase() }
+                val icon = icons.firstOrNull()
+                val defaultIcon = IconResponseItem(imgUrl = DEFAULT_ICON, name = coin.uppercase(), symbol = coin)
+                it.toDatabase(icon?: defaultIcon)
+            }
+            localSource.insertData(data)
         }
+        localSource.getAllData().map { it.toDomain() }
     }
-
 
     override suspend fun getTicker(): TickerModel {
         TODO("Not yet implemented")

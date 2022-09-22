@@ -7,7 +7,7 @@ import java.net.Socket
 import java.net.SocketTimeoutException
 import java.nio.channels.IllegalBlockingModeException
 
-object Network {
+object NetworkUtils {
     suspend fun isNetworkAvailable():Boolean = coroutineScope {
         return@coroutineScope try {
             val socket = Socket()

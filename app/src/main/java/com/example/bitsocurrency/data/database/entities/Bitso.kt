@@ -23,18 +23,3 @@ data class BitsoEntity(
     @ColumnInfo(name = "name") val name: String = "",
     @ColumnInfo(name = "symbol") val symbol: String = ""
 )
-
-fun Bitso.toDatabase() = BitsoEntity(
-    book = book,
-    defaultChart = defaultChart,
-    maximumAmount = maximumAmount,
-    maximumPrice = maximumPrice,
-    maximumValue = maximumValue,
-    minimumAmount = minimumAmount,
-    minimumPrice = minimumPrice,
-    minimumValue = minimumValue,
-    tickSize = tickSize,
-    imgUrl = imgUrl,
-    name = name,
-    symbol = symbol,
-)

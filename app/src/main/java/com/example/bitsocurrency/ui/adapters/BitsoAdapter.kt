@@ -2,24 +2,14 @@ package com.example.bitsocurrency.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bitsocurrency.databinding.ListItemBitsoBinding
 import com.example.bitsocurrency.domain.models.Bitso
+import com.example.bitsocurrency.utils.diff.DiffCallback
 import com.example.bitsocurrency.utils.extensions.loadUrl
 
-class BitsoAdapter(private val onItemClickListener: BitsoOnItemClickListener) : ListAdapter<Bitso, BitsoAdapter.BitsoViewHolder>(DiffCallback()) {
-
-    private class DiffCallback : DiffUtil.ItemCallback<Bitso>() {
-        override fun areItemsTheSame(oldItem: Bitso, newItem: Bitso): Boolean {
-            return oldItem.book == newItem.book
-        }
-
-        override fun areContentsTheSame(oldItem: Bitso, newItem: Bitso): Boolean {
-            return oldItem == newItem
-        }
-    }
+class BitsoAdapter(private val onItemClickListener: BitsoOnItemClickListener) : ListAdapter<Bitso, BitsoAdapter.BitsoViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BitsoViewHolder {
         val binding = ListItemBitsoBinding.inflate(LayoutInflater.from(parent.context), parent, false)

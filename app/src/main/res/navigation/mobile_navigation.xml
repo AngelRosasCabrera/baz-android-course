@@ -12,12 +12,21 @@
         tools:layout="@layout/fragment_bitso">
         <action
             android:id="@+id/action_navigation_home_bitso_to_navigation_details_bitso"
-            app:destination="@id/navigation_details_bitso" />
+            app:destination="@id/navigation_details_bitso"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_details_bitso"
         android:name="com.example.bitsocurrency.ui.fragments.DetailsBitsoFragment"
         android:label="@string/title_bitso_details"
-        tools:layout="@layout/fragment_details_bitso" />
+        tools:layout="@layout/fragment_details_bitso">
+        <argument
+            android:name="bitso"
+            app:argType="com.example.bitsocurrency.domain.models.Bitso"
+            app:nullable="false" />
+    </fragment>
 </navigation>

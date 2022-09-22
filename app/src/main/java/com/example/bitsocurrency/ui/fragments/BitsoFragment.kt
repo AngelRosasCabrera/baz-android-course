@@ -44,7 +44,7 @@ class BitsoFragment : Fragment() {
         viewModel.getAvailableBooks(isRefresh = false)
 
         viewModel.availableBooks.observe(viewLifecycleOwner) {
-            adapter.items = it
+            adapter.submitList(it)
             (requireActivity() as MainActivity).hideLoading()
             binding.swBitsoRefresh.isRefreshing = false
         }

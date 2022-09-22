@@ -30,7 +30,7 @@ class BitsoFragment : Fragment(), BitsoAdapter.BitsoOnItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = BitsoAdapter(this)
+        adapter = BitsoAdapter(this, requireContext())
 
         with(binding) {
             rvBitsoCurrency.adapter = adapter

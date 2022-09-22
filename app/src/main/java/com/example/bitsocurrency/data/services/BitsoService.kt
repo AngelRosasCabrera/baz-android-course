@@ -6,6 +6,7 @@ import com.example.bitsocurrency.BuildConfig.ORDER_BOOK
 import com.example.bitsocurrency.data.services.models.bitso.BitsoResponse
 import com.example.bitsocurrency.data.services.models.bitso.BookResponse
 import com.example.bitsocurrency.data.services.models.bitso.TickerResponse
+import io.reactivex.rxjava3.core.Observable
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -18,6 +19,6 @@ interface BitsoService {
     suspend fun getTicker(): TickerResponse
 
     @GET(ORDER_BOOK)
-    suspend fun getBook(@Query("book") book: String): BookResponse
+    fun getBook(@Query("book") book: String): Observable<BookResponse>
 
 }

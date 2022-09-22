@@ -1,7 +1,10 @@
 package com.example.bitsocurrency.domain.models
 
+import android.os.Parcelable
 import com.example.bitsocurrency.data.database.entities.BitsoEntity
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Bitso(
     val book: String = "",
     val defaultChart: String = "",
@@ -15,7 +18,7 @@ data class Bitso(
     val imgUrl: String = "",
     val name: String = "",
     val symbol: String = ""
-)
+) : Parcelable
 
 fun BitsoEntity.toDomain() = Bitso(
     book = book,

@@ -9,4 +9,8 @@
 
     <!-- Backpressed -->
     <string name="press_back_again_to_exit">Presiona de nuevo para salir</string>
+
+    <!-- Details -->
+    <string name="details_maximum_price">Precio máximo</string>
+    <string name="details_minimum_price">Precio mínimo</string>
 </resources>

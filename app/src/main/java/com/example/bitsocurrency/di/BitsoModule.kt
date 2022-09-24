@@ -2,21 +2,18 @@ package com.example.bitsocurrency.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.bitsocurrency.BuildConfig.*
+import com.example.bitsocurrency.BuildConfig
 import com.example.bitsocurrency.data.database.DatabaseApp
-import com.example.bitsocurrency.data.database.DatabaseDao
 import com.example.bitsocurrency.data.datasource.BitsoDataSource
 import com.example.bitsocurrency.data.datasource.BitsoLocalDataSource
 import com.example.bitsocurrency.data.datasource.LocalBitsoDataSource
 import com.example.bitsocurrency.data.datasource.RemoteBitsoDataSource
 import com.example.bitsocurrency.data.repository.BitsoRepository
 import com.example.bitsocurrency.data.repository.BitsoRepositoryImpl
-import com.example.bitsocurrency.data.repository.CoinRepository
-import com.example.bitsocurrency.data.repository.CoinRepositoryImpl
 import com.example.bitsocurrency.data.services.BitsoService
-import com.example.bitsocurrency.data.services.CoinService
 import com.example.bitsocurrency.data.services.IconService
 import com.example.bitsocurrency.utils.constants.Constants.DATABASE_NAME
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -33,90 +30,75 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object BitsoModule {
-    // region CoroutineDispatcher
-    @Provides
-    @Singleton
-    fun provideCoroutineDispatcher(): CoroutineDispatcher = Dispatchers.IO
-    // endregion
+abstract class BitsoModule {
 
-    // region Clients http
-    @Provides
+    @Binds
     @Singleton
-    fun provideOkHttpClient(): OkHttpClient {
-        val interceptor = HttpLoggingInterceptor()
-        interceptor.level = HttpLoggingInterceptor.Level.BODY
-        return OkHttpClient().newBuilder().addInterceptor(interceptor).build()
-    }
+    abstract fun provideBitsoDataSource(remoteBitsoDataSource: RemoteBitsoDataSource): BitsoDataSource
 
-    @Provides
+    @Binds
     @Singleton
-    fun provideRetrofit(url: String, client: OkHttpClient): Retrofit {
-        return Retrofit.Builder()
+    abstract fun provideBitsoLocalDataSource(localBitsoDataSource: LocalBitsoDataSource): BitsoLocalDataSource
+
+    @Binds
+    @Singleton
+    abstract fun provideBitsoRepository(bitsoRepositoryImpl: BitsoRepositoryImpl): BitsoRepository
+
+    companion object {
+        @Provides
+        @Singleton
+        fun provideCoroutineDispatcher(): CoroutineDispatcher = Dispatchers.IO
+
+        @Provides
+        @Singleton
+        fun provideOkHttpClient(): OkHttpClient {
+            val interceptor = HttpLoggingInterceptor()
+            interceptor.level = HttpLoggingInterceptor.Level.BODY
+            return OkHttpClient().newBuilder().addInterceptor(interceptor).addInterceptor { chain ->
+                val original = chain.request()
+                val request = original.newBuilder()
+                    .addHeader("User-Agent", "BitsoCurrency")
+                    .method(original.method, original.body)
+                    .build()
+                chain.proceed(request)
+
+            }.build()
+        }
+
+        @Provides
+        @Singleton
+        fun provideRetrofit(url: String, client: OkHttpClient): Retrofit = Retrofit.Builder()
             .baseUrl(url)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .build()
+
+
+        @Provides
+        @Singleton
+        fun provideBitsoService(): BitsoService = provideRetrofit(
+            BuildConfig.API_URL,
+            provideOkHttpClient()
+        ).create(BitsoService::class.java)
+
+        @Provides
+        @Singleton
+        fun provideIconService(): IconService = provideRetrofit(
+            BuildConfig.GITHUB_RAW,
+            provideOkHttpClient()
+        ).create(IconService::class.java)
+
+        @Provides
+        @Singleton
+        fun provideDatabaseApp(@ApplicationContext context: Context): DatabaseApp =
+            Room.databaseBuilder(context, DatabaseApp::class.java, DATABASE_NAME)
+                .fallbackToDestructiveMigration()
+                .allowMainThreadQueries()
+                .build()
+
+        @Provides
+        @Singleton
+        fun provideDatabaseDao(databaseApp: DatabaseApp) = databaseApp.dao()
     }
-    // endregion
-
-    // region Bitso
-    @Provides
-    @Singleton
-    fun provideBitsoService(): BitsoService {
-        return provideRetrofit(API_URL, provideOkHttpClient()).create(BitsoService::class.java)
-    }
-
-    @Provides
-    @Singleton
-    fun provideBitsoDataSource():BitsoDataSource = RemoteBitsoDataSource(provideBitsoService(), provideIconService())
-
-    @Provides
-    @Singleton
-    fun provideBitsoRepository(@ApplicationContext context: Context): BitsoRepository {
-        return BitsoRepositoryImpl(provideBitsoDataSource(), provideBitsoLocalDataSource(context),provideCoroutineDispatcher())
-    }
-    // endregion
-
-    // region Coin
-    @Provides
-    @Singleton
-    fun provideCoinService(): CoinService {
-        return provideRetrofit(API_COIN_MARKET, provideOkHttpClient()).create(CoinService::class.java)
-    }
-
-    @Provides
-    @Singleton
-    fun provideCoinRepository(): CoinRepository {
-        return CoinRepositoryImpl(provideCoinService(), provideCoroutineDispatcher())
-    }
-
-    // endregion
-
-    // region Icons
-    @Provides
-    @Singleton
-    fun provideIconService(): IconService = provideRetrofit(GITHUB_RAW, provideOkHttpClient()).create(IconService::class.java)
-
-    // endregion
-
-    // region Database
-    @Provides
-    @Singleton
-    fun provideDatabaseApp(@ApplicationContext context: Context): DatabaseApp =
-        Room.databaseBuilder(context, DatabaseApp::class.java, DATABASE_NAME)
-            .fallbackToDestructiveMigration()
-            .allowMainThreadQueries()
-            .build()
-
-    @Provides
-    @Singleton
-    fun provideDatabaseDao(@ApplicationContext context: Context): DatabaseDao = provideDatabaseApp(context).dao()
-
-    @Provides
-    @Singleton
-    fun provideBitsoLocalDataSource(@ApplicationContext context: Context): BitsoLocalDataSource =
-        LocalBitsoDataSource(provideDatabaseDao(context))
-    // endregion
 }

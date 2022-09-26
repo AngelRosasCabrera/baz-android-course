@@ -4,13 +4,48 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/btn_atras"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gd_details_top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="atras"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.28" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_details_bitso"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/margin_10dp"
+        app:cardBackgroundColor="?attr/colorPrimary"
+        app:cardCornerRadius="@dimen/radio_10dp"
+        app:cardElevation="@dimen/elevation_4dp"
+        app:layout_constraintBottom_toTopOf="@id/gd_details_top"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <include
+            android:id="@+id/cl_details_bitso"
+            layout="@layout/widget_card_view_details" />
+
+    </androidx.cardview.widget.CardView>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cv_details_bitso" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/tab_layout" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

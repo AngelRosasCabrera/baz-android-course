@@ -16,7 +16,7 @@ interface BitsoService {
     suspend fun getAvailableBooks(): BitsoResponse
 
     @GET(TICKER)
-    suspend fun getTicker(): TickerResponse
+    fun getTicker(@Query("book") book: String): Observable<TickerResponse>
 
     @GET(ORDER_BOOK)
     fun getBook(@Query("book") book: String): Observable<BookResponse>

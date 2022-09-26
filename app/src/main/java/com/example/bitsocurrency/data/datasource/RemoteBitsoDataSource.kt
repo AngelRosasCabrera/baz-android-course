@@ -15,7 +15,7 @@ class RemoteBitsoDataSource @Inject constructor(
 ) : BitsoDataSource {
     override suspend fun getAvailableBooks(): BitsoResponse = bitsoService.getAvailableBooks()
 
-    override suspend fun getTicker(): TickerResponse = bitsoService.getTicker()
+    override fun getTicker(book: String): Observable<TickerResponse> = bitsoService.getTicker(book)
 
     override fun getBook(book: String): Observable<BookResponse> = bitsoService.getBook(book)
 

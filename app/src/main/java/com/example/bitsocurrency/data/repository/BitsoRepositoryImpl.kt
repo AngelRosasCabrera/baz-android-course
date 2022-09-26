@@ -3,10 +3,11 @@ package com.example.bitsocurrency.data.repository
 import com.example.bitsocurrency.data.datasource.BitsoDataSource
 import com.example.bitsocurrency.data.datasource.BitsoLocalDataSource
 import com.example.bitsocurrency.data.mappers.toDatabase
-import com.example.bitsocurrency.data.services.models.bitso.TickerModel
+import com.example.bitsocurrency.data.mappers.toDomain
 import com.example.bitsocurrency.data.services.models.icon.IconResponseItem
 import com.example.bitsocurrency.domain.models.Bitso
 import com.example.bitsocurrency.domain.models.Book
+import com.example.bitsocurrency.domain.models.Ticker
 import com.example.bitsocurrency.domain.models.toDomain
 import com.example.bitsocurrency.utils.constants.Constants.DEFAULT_ICON
 import com.example.bitsocurrency.utils.constants.Constants.DELIMITER_UNDESCORE
@@ -39,14 +40,12 @@ class BitsoRepositoryImpl @Inject constructor(
         localSource.getAllData().map { it.toDomain() }
     }
 
-    override suspend fun getTicker(): TickerModel {
-        TODO("Not yet implemented")
+    override fun getTicker(book: String): Observable<Ticker> {
+        return dataSource.getTicker(book).map { it.payload.toDomain() }
     }
 
     override fun getBook(book: String): Observable<Book> {
-
         return dataSource.getBook(book).map { it.payload.toDomain() }
-
     }
 
 }

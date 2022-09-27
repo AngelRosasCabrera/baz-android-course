@@ -8,8 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bitsocurrency.databinding.FragmentBidAskBinding
-import com.example.bitsocurrency.ui.adapters.AskAdapter
-import com.example.bitsocurrency.ui.adapters.BidAdapter
+import com.example.bitsocurrency.ui.adapters.AskBidAdapter
 import com.example.bitsocurrency.ui.viewmodel.BitsoViewModel
 
 class BidAskFragment(private val ask: Boolean) : Fragment() {
@@ -18,8 +17,7 @@ class BidAskFragment(private val ask: Boolean) : Fragment() {
 
     private lateinit var binding: FragmentBidAskBinding
 
-    private lateinit var askAdapter: AskAdapter
-    private lateinit var bidAdapter: BidAdapter
+    private lateinit var adapter: AskBidAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentBidAskBinding.inflate(inflater, container, false)
@@ -28,24 +26,18 @@ class BidAskFragment(private val ask: Boolean) : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        adapter = AskBidAdapter()
         with(binding) {
             rvAskBid.setHasFixedSize(false)
             rvAskBid.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            rvAskBid.adapter = if (ask) {
-                askAdapter = AskAdapter()
-                askAdapter
-            } else {
-                bidAdapter = BidAdapter()
-                bidAdapter
-            }
+            rvAskBid.adapter = adapter
         }
 
         viewModel.books.observe(viewLifecycleOwner) {
             if (ask) {
-                askAdapter.submitList(it.asks)
+                adapter.submitList(it.asks)
             } else {
-                bidAdapter.submitList(it.bids)
+                adapter.submitList(it.bids)
             }
         }
 

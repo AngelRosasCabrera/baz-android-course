@@ -14,6 +14,8 @@
     <string name="details_maximum_price">Precio máximo</string>
     <string name="details_minimum_price">Precio mínimo</string>
     <string name="details_last_price">Último precio</string>
+    <string name="details_price">Precio</string>
+    <string name="details_amount">Importe</string>
 
     <!-- Tabs -->
     <string name="tab_ask">Ask</string>

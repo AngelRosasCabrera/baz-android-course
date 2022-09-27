@@ -1,5 +1,7 @@
 package com.example.bitsocurrency.utils.network
 
+import android.content.Context
+import android.net.ConnectivityManager
 import kotlinx.coroutines.coroutineScope
 import java.io.IOException
 import java.net.InetSocketAddress
@@ -23,5 +25,11 @@ object NetworkUtils {
         catch (e: SocketTimeoutException) { false }
         catch (e: IllegalBlockingModeException) { false }
         catch (e: IllegalArgumentException) { false }
+    }
+
+    fun isNetworkConnected(context: Context): Boolean {
+        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val netInfo = cm.activeNetworkInfo
+        return netInfo != null && netInfo.isConnectedOrConnecting
     }
 }

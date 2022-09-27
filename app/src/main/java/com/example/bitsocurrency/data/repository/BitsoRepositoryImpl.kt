@@ -1,5 +1,6 @@
 package com.example.bitsocurrency.data.repository
 
+import android.content.Context
 import com.example.bitsocurrency.data.datasource.BitsoDataSource
 import com.example.bitsocurrency.data.datasource.BitsoLocalDataSource
 import com.example.bitsocurrency.data.mappers.toDatabase
@@ -21,6 +22,7 @@ class BitsoRepositoryImpl @Inject constructor(
     private val dataSource: BitsoDataSource,
     private val localSource: BitsoLocalDataSource,
     private val dispatcher: CoroutineDispatcher,
+    private val context: Context
 ) : BitsoRepository {
     override suspend fun getAvailableBooks(): List<Bitso> = withContext(dispatcher) {
         if (NetworkUtils.isNetworkAvailable()) {
@@ -41,11 +43,15 @@ class BitsoRepositoryImpl @Inject constructor(
     }
 
     override fun getTicker(book: String): Observable<Ticker> {
-        return dataSource.getTicker(book).map { it.payload.toDomain() }
+        return if (NetworkUtils.isNetworkConnected(context))
+            dataSource.getTicker(book).map { it.payload.toDomain() }
+        else Observable.empty()
     }
 
     override fun getBook(book: String): Observable<Book> {
-        return dataSource.getBook(book).map { it.payload.toDomain() }
+        return if (NetworkUtils.isNetworkConnected(context))
+            dataSource.getBook(book).map { it.payload.toDomain() }
+        else Observable.empty()
     }
 
 }

@@ -34,21 +34,13 @@ import javax.inject.Singleton
 abstract class BitsoModule {
 
     @Binds
-    @Singleton
     abstract fun provideBitsoDataSource(remoteBitsoDataSource: RemoteBitsoDataSource): BitsoDataSource
 
     @Binds
-    @Singleton
     abstract fun provideBitsoLocalDataSource(localBitsoDataSource: LocalBitsoDataSource): BitsoLocalDataSource
 
     @Binds
-    @Singleton
     abstract fun provideBitsoRepository(bitsoRepositoryImpl: BitsoRepositoryImpl): BitsoRepository
-
-    @Binds
-    @Singleton
-    abstract fun provideApplicationContext(@ApplicationContext context: Context): Context
-
 
     companion object {
         @Provides

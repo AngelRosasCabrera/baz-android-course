@@ -13,7 +13,6 @@ import com.example.bitsocurrency.data.repository.BitsoRepositoryImpl
 import com.example.bitsocurrency.data.services.BitsoService
 import com.example.bitsocurrency.data.services.IconService
 import com.example.bitsocurrency.utils.constants.Constants.DATABASE_NAME
-import com.example.bitsocurrency.utils.network.NetworkUtils
 import dagger.Binds
 import dagger.Module
 import dagger.Provides

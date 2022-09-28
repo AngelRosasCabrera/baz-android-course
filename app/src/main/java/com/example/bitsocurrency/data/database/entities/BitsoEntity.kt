@@ -3,7 +3,6 @@ package com.example.bitsocurrency.data.database.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.bitsocurrency.domain.models.Bitso
 import com.example.bitsocurrency.utils.constants.Constants.TABLE_BITSO
 
 @Entity(tableName = TABLE_BITSO)

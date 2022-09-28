@@ -6,12 +6,11 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.bitsocurrency.data.database.entities.BitsoEntity
 import com.example.bitsocurrency.utils.constants.Constants.TABLE_BITSO
-import org.jetbrains.annotations.NotNull
 
 @Dao
 interface DatabaseDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertData(@NotNull data: List<BitsoEntity>)
+    suspend fun insertData(data: List<BitsoEntity>)
 
     @Query("SELECT * FROM $TABLE_BITSO")
     suspend fun getAllData(): List<BitsoEntity>

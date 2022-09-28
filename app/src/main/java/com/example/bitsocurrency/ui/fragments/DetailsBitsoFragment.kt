@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.navGraphViewModels
 import com.example.bitsocurrency.R
 import com.example.bitsocurrency.databinding.FragmentDetailsBitsoBinding
 import com.example.bitsocurrency.domain.models.Bitso
@@ -65,11 +66,6 @@ class DetailsBitsoFragment: Fragment() {
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
-    }
-
-    override fun onDestroy() {
-        viewModel.onDestroy()
-        super.onDestroy()
     }
 
 }

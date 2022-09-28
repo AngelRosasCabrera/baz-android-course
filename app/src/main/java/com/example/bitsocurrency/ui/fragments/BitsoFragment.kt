@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.bitsocurrency.R
 import com.example.bitsocurrency.databinding.FragmentBitsoBinding
 import com.example.bitsocurrency.domain.models.Bitso
 import com.example.bitsocurrency.ui.activities.MainActivity

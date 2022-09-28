@@ -44,11 +44,10 @@ class BitsoViewModel @Inject constructor(
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { disposable -> compositeDisposable?.add(disposable) }
             .doOnError { onError -> Log.d("AndroidStudio", onError.message.toString()) }
-            .doOnNext { item ->
+            .doOnSuccess { item ->
                 _books.value = item.book
                 _tickers.value = item.tickers
             }
-            .doOnComplete { Log.d("AndroidStudio", "Completo") }
             .subscribe()
     }
 
@@ -58,9 +57,10 @@ class BitsoViewModel @Inject constructor(
         }
     }
 
-    fun onDestroy() {
+    override fun onCleared() {
+        super.onCleared()
         unSubscribeFromObservable()
-        compositeDisposable = null
+        compositeDisposable?.clear()
     }
 
 }

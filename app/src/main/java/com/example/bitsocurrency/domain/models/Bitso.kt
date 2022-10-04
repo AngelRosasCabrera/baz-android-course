@@ -6,6 +6,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Bitso(
+    val bitsoId: Int = 0,
     val book: String = "",
     val defaultChart: String = "",
     val maximumAmount: String = "",
@@ -21,6 +22,7 @@ data class Bitso(
 ) : Parcelable
 
 fun BitsoEntity.toDomain() = Bitso(
+    bitsoId = bitsoId,
     book = book,
     defaultChart = defaultChart,
     maximumAmount = maximumAmount,

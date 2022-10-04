@@ -1,10 +1,12 @@
 package com.example.bitsocurrency.data.mappers
 
 import com.example.bitsocurrency.data.database.entities.BitsoEntity
+import com.example.bitsocurrency.data.database.entities.DetailsEntity
 import com.example.bitsocurrency.data.services.models.bitso.BitsoModel
 import com.example.bitsocurrency.data.services.models.bitso.RollingAverageChangeModel
 import com.example.bitsocurrency.data.services.models.bitso.TickerModel
 import com.example.bitsocurrency.data.services.models.icon.IconResponseItem
+import com.example.bitsocurrency.domain.models.Details
 import com.example.bitsocurrency.domain.models.RollingAverageChange
 import com.example.bitsocurrency.domain.models.Ticker
 
@@ -38,3 +40,17 @@ fun TickerModel.toDomain() = Ticker(
 )
 
 fun RollingAverageChangeModel.toDomain() = RollingAverageChange(x6 = x6)
+
+fun Details.toDatabase() = DetailsEntity(
+    bitsoId = bitsoId,
+    tickers = tickers,
+    book = book,
+    fromDatabase = true
+)
+
+fun DetailsEntity.toDomain() = Details(
+    bitsoId = bitsoId,
+    tickers = tickers,
+    book = book,
+    fromDatabase = fromDatabase
+)

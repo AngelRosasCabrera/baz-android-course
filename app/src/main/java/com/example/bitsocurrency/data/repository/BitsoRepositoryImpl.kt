@@ -1,14 +1,15 @@
 package com.example.bitsocurrency.data.repository
 
+import android.util.Log
+import com.example.bitsocurrency.data.database.entities.BitsoEntity
 import com.example.bitsocurrency.data.datasource.BitsoDataSource
 import com.example.bitsocurrency.data.datasource.BitsoLocalDataSource
 import com.example.bitsocurrency.data.mappers.toDatabase
 import com.example.bitsocurrency.data.mappers.toDomain
+import com.example.bitsocurrency.data.services.models.bitso.BitsoModel
+import com.example.bitsocurrency.data.services.models.icon.IconResponse
 import com.example.bitsocurrency.data.services.models.icon.IconResponseItem
-import com.example.bitsocurrency.domain.models.Bitso
-import com.example.bitsocurrency.domain.models.Book
-import com.example.bitsocurrency.domain.models.Ticker
-import com.example.bitsocurrency.domain.models.toDomain
+import com.example.bitsocurrency.domain.models.*
 import com.example.bitsocurrency.utils.constants.Constants.DEFAULT_ICON
 import com.example.bitsocurrency.utils.constants.Constants.DELIMITER_UNDESCORE
 import com.example.bitsocurrency.utils.network.NetworkUtils
@@ -26,19 +27,11 @@ class BitsoRepositoryImpl @Inject constructor(
     override suspend fun getAvailableBooks(): List<Bitso> = withContext(dispatcher) {
         if (networkUtils.isNetworkAvailable()) {
             localSource.deleteAllData()
-            val mapOfIcons = dataSource.getMapIcons()
-            val data = dataSource.getAvailableBooks().payload.map {
-                val coin = it.book.split(DELIMITER_UNDESCORE).first()
-                val icons: List<IconResponseItem> =
-                    mapOfIcons.filter { item -> item.symbol.lowercase() == coin.lowercase() }
-                val icon = icons.firstOrNull()
-                val defaultIcon =
-                    IconResponseItem(imgUrl = DEFAULT_ICON, name = coin.uppercase(), symbol = coin)
-                it.toDatabase(icon ?: defaultIcon)
-            }
-            localSource.insertData(data)
+            val iconResponse = dataSource.getMapIcons()
+            val bitsoCurrency = dataSource.getAvailableBooks().payload.map { bitso-> bitso.toDatabase(icon(bitso, iconResponse)) }
+            localSource.insertData(bitsoCurrency)
         }
-        localSource.getAllData().map { it.toDomain() }
+        localSource.getAllData().map(BitsoEntity::toDomain)
     }
 
     override fun getTicker(book: String): Single<Ticker> {
@@ -51,6 +44,20 @@ class BitsoRepositoryImpl @Inject constructor(
         return if (networkUtils.isNetworkConnected())
             dataSource.getBook(book).map { it.payload.toDomain() }
         else Single.never()
+    }
+
+    override fun insertDetails(data: Details) = localSource.insertDetails(data.toDatabase())
+
+    override fun getDetails(bitsoId: Int): Details = localSource.getAllDetails(bitsoId).toDomain()
+
+    override fun deleteAllDetails() = localSource.deleteAllDetails()
+
+    private fun icon(bitso: BitsoModel, iconResponse: IconResponse): IconResponseItem {
+        val coin = bitso.book.split(DELIMITER_UNDESCORE).first()
+        val icons: List<IconResponseItem> = iconResponse.filter { item -> item.symbol.lowercase() == coin.lowercase() }
+        val icon = icons.firstOrNull()
+        val defaultIcon = IconResponseItem(imgUrl = DEFAULT_ICON, name = coin.uppercase(), symbol = coin)
+        return icon ?: defaultIcon
     }
 
 }

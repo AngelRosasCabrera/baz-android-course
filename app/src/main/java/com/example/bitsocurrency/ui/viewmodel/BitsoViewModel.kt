@@ -38,8 +38,8 @@ class BitsoViewModel @Inject constructor(
         _availableBooks.value = availableBooksUseCase.invoke(isRefresh)
     }
 
-    fun getDetails(book: String) {
-        detailsUseCase.invoke(book)
+    fun getDetails(detailId: Int, book: String) {
+        detailsUseCase.invoke(detailId, book)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { disposable -> compositeDisposable?.add(disposable) }

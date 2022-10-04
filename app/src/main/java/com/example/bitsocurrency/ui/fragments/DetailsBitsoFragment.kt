@@ -1,6 +1,7 @@
 package com.example.bitsocurrency.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,12 +37,12 @@ class DetailsBitsoFragment: Fragment() {
         onBackPressed()
     }
 
-    private fun cardViewDetails(data: Bitso) {
-        viewModel.getDetails(data.book)
+    private fun cardViewDetails(bitso: Bitso) {
+        viewModel.getDetails(bitso.bitsoId, bitso.book)
         viewModel.tickers.observe(viewLifecycleOwner) {
             with(binding.clDetailsBitso) {
-                tvDetailsCurrencyName.text = data.name
-                tvDetailsCurrencySymbol.text = data.symbol
+                tvDetailsCurrencyName.text = bitso.name
+                tvDetailsCurrencySymbol.text = bitso.symbol
                 tvDetailsMaximumPrice.text = it.high.toDouble().formatAsCurrency()
                 tvDetailsMinimumPrice.text = it.low.toDouble().formatAsCurrency()
                 tvDetailsLastPrice.text = it.last.toDouble().formatAsCurrency()

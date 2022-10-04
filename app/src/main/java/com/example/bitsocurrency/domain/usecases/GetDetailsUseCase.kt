@@ -7,9 +7,14 @@ import javax.inject.Inject
 
 class GetDetailsUseCase @Inject constructor(private val repository: BitsoRepository) {
 
-    operator fun invoke(book: String): Single<Details> {
+    operator fun invoke(bitsoId: Int, book: String): Single<Details> {
         return Single.zip(repository.getTicker(book), repository.getBook(book)) { tickers, books ->
-            Details(tickers, books)
+            val details = Details(bitsoId = bitsoId,tickers = tickers, book = books)
+            if (details.tickers.ask.isNotEmpty()) {
+                repository.deleteAllDetails()
+                repository.insertDetails(details)
+            }
+            repository.getDetails(bitsoId)
         }
     }
 

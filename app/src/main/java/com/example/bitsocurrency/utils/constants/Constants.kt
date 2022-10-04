@@ -16,6 +16,7 @@ object Constants {
      * Table name bitso
      */
     const val TABLE_BITSO = "bitso"
+    const val TABLE_DETAILS = "details"
     // endregion
 
     const val DEFAULT_ICON = "https://www.picng.com/upload/dollar_sign/png_dollar_sign_63779.png"

@@ -6,7 +6,7 @@ import com.example.bitsocurrency.data.services.models.bitso.BitsoResponse
 import com.example.bitsocurrency.data.services.models.bitso.BookResponse
 import com.example.bitsocurrency.data.services.models.bitso.TickerResponse
 import com.example.bitsocurrency.data.services.models.icon.IconResponse
-import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
 
 class RemoteBitsoDataSource @Inject constructor(
@@ -15,9 +15,9 @@ class RemoteBitsoDataSource @Inject constructor(
 ) : BitsoDataSource {
     override suspend fun getAvailableBooks(): BitsoResponse = bitsoService.getAvailableBooks()
 
-    override suspend fun getTicker(): TickerResponse = bitsoService.getTicker()
+    override fun getTicker(book: String): Single<TickerResponse> = bitsoService.getTicker(book)
 
-    override fun getBook(book: String): Observable<BookResponse> = bitsoService.getBook(book)
+    override fun getBook(book: String): Single<BookResponse> = bitsoService.getBook(book)
 
     override suspend fun getMapIcons(): IconResponse = iconService.getMapIcons()
 }

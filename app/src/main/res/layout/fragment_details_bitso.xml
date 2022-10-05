@@ -4,13 +4,114 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/btn_atras"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gd_details_top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="atras"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.30" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lt_wifi_off"
+        android:layout_width="@dimen/width_height_56dp"
+        android:layout_height="@dimen/width_height_56dp"
+        android:elevation="@dimen/elevation_5dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/cv_details_bitso"
+        app:layout_constraintDimensionRatio="0.4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/cv_details_bitso"
+        app:layout_constraintVertical_bias="0"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/wifi_off"
+        app:lottie_repeatMode="restart" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_details_bitso"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/margin_10dp"
+        app:cardBackgroundColor="?attr/colorPrimary"
+        app:cardCornerRadius="@dimen/radio_10dp"
+        app:cardElevation="@dimen/elevation_4dp"
+        app:layout_constraintBottom_toTopOf="@id/gd_details_top"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <include
+            android:id="@+id/cl_details_bitso"
+            layout="@layout/widget_card_view_details"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.cardview.widget.CardView>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_10dp"
+        android:layout_marginTop="@dimen/margin_15dp"
+        android:background="@color/transparent"
+        app:layout_constraintBottom_toTopOf="@id/tv_ask_bid_amount_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cv_details_bitso"
+        app:tabGravity="fill"
+        app:tabIndicator="@drawable/style_tab_indicator"
+        app:tabIndicatorAnimationMode="elastic"
+        app:tabIndicatorGravity="stretch"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="?attr/colorAccent"
+        app:tabTextColor="?attr/colorOnPrimary" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_ask_bid_amount_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_10dp"
+        android:maxLines="@integer/line_1"
+        android:text="@string/details_amount"
+        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+        android:textColor="@color/color_text_secondary"
+        android:textStyle="bold"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintBottom_toTopOf="@id/pager"
+        app:layout_constraintEnd_toStartOf="@id/tv_ask_bid_price_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tab_layout" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_ask_bid_price_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_10dp"
+        android:maxLines="@integer/line_1"
+        android:text="@string/details_price"
+        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+        android:textColor="@color/color_text_secondary"
+        android:textStyle="bold"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintBottom_toTopOf="@id/pager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_ask_bid_amount_title"
+        app:layout_constraintTop_toBottomOf="@id/tab_layout" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/tv_ask_bid_amount_title" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

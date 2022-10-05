@@ -1,6 +1,5 @@
 package com.example.bitsocurrency.data.repository
 
-import android.util.Log
 import com.example.bitsocurrency.data.database.entities.BitsoEntity
 import com.example.bitsocurrency.data.datasource.BitsoDataSource
 import com.example.bitsocurrency.data.datasource.BitsoLocalDataSource
@@ -9,14 +8,18 @@ import com.example.bitsocurrency.data.mappers.toDomain
 import com.example.bitsocurrency.data.services.models.bitso.BitsoModel
 import com.example.bitsocurrency.data.services.models.icon.IconResponse
 import com.example.bitsocurrency.data.services.models.icon.IconResponseItem
-import com.example.bitsocurrency.domain.models.*
+import com.example.bitsocurrency.domain.models.Bitso
+import com.example.bitsocurrency.domain.models.Book
+import com.example.bitsocurrency.domain.models.Details
+import com.example.bitsocurrency.domain.models.Ticker
+import com.example.bitsocurrency.domain.models.toDomain
 import com.example.bitsocurrency.utils.constants.Constants.DEFAULT_ICON
 import com.example.bitsocurrency.utils.constants.Constants.DELIMITER_UNDESCORE
 import com.example.bitsocurrency.utils.network.NetworkUtils
 import io.reactivex.rxjava3.core.Single
+import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
 class BitsoRepositoryImpl @Inject constructor(
     private val dataSource: BitsoDataSource,

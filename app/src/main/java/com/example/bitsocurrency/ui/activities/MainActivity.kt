@@ -25,4 +25,10 @@ class MainActivity : AppCompatActivity() {
         binding.lottieLoading.visibility = View.GONE
     }
 
+    fun showLoading() {
+        binding.lottieLoading.visibility = View.VISIBLE
+        binding.lottieLoading.playAnimation()
+        binding.lottieLoading.loop(true)
+    }
+
 }

@@ -6,13 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.airbnb.lottie.LottieDrawable
 import com.example.bitsocurrency.R
 import com.example.bitsocurrency.databinding.FragmentDetailsBitsoBinding
 import com.example.bitsocurrency.domain.models.Bitso
+import com.example.bitsocurrency.ui.activities.MainActivity
 import com.example.bitsocurrency.ui.adapters.BitsoTabAdapter
 import com.example.bitsocurrency.ui.viewmodel.BitsoViewModel
 import com.example.bitsocurrency.utils.extensions.formatAsCurrency
@@ -35,6 +38,11 @@ class DetailsBitsoFragment: Fragment() {
         cardViewDetails(args.bitso)
         setTabLayout()
         onBackPressed()
+
+        wifiObserver()
+        loadingObserver()
+        messageObserver()
+
     }
 
     private fun cardViewDetails(bitso: Bitso) {
@@ -47,6 +55,36 @@ class DetailsBitsoFragment: Fragment() {
                 tvDetailsMinimumPrice.text = it.low.toDouble().formatAsCurrency()
                 tvDetailsLastPrice.text = it.last.toDouble().formatAsCurrency()
             }
+        }
+    }
+
+    private fun wifiObserver() {
+        viewModel.wifiOff.observe(viewLifecycleOwner) { isConnected ->
+            val style: Int
+            if (isConnected) {
+                binding.ltWifiOff.visibility = View.GONE
+                style = R.drawable.style_connection_normal
+            }
+            else {
+                binding.ltWifiOff.visibility = View.VISIBLE
+                binding.ltWifiOff.playAnimation()
+                binding.ltWifiOff.repeatCount = LottieDrawable.INFINITE
+                style = R.drawable.style_without_connection_to_internet
+            }
+            binding.clDetailsBitso.root.background = ContextCompat.getDrawable(requireContext(), style)
+        }
+    }
+
+    private fun loadingObserver(){
+        viewModel.loading.observe(viewLifecycleOwner) { isLoading ->
+            val activity = (requireActivity() as MainActivity)
+            if(isLoading) activity.showLoading() else activity.hideLoading()
+        }
+    }
+
+    private fun messageObserver() {
+        viewModel.messageError.observe(viewLifecycleOwner) { message ->
+            Log.e("AndroidStudio", message)
         }
     }
 

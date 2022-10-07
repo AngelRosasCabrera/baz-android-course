@@ -5,7 +5,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 data class TickerResponse(
-    @SerializedName("payload") @Expose val payload: List<TickerModel> = listOf(),
+    @SerializedName("payload") @Expose val payload: TickerModel,
     @SerializedName("success") @Expose val success: Boolean = false,
 )
 
